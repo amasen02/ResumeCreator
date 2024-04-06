@@ -23,12 +23,12 @@ namespace WebApplication1.Services
 
 
             // Replace placeholders with JSON values
-            template = template.Replace("##position##", EscapeSpecialCharacters(data.Position));
-            template = template.Replace("##maintech##", ConvertToLaTeX(EscapeSpecialCharacters(data.Maintech)));
-            template = template.Replace("##summary##", EscapeSpecialCharacters(data.Summary));
-            template = template.Replace("##takmisummary##", EscapeSpecialCharacters(data.Takumisummary));
-            template = template.Replace("##essawasummary##", EscapeSpecialCharacters(data.Esshvasummary));
-            template = template.Replace("##ewingsummary##", EscapeSpecialCharacters(data.Ewingssummary));
+            template = template.Replace("##position##", EscapeSpecialCharacters(data.Position.ToString()));
+            template = template.Replace("##maintech##", ConvertToLaTeX(EscapeSpecialCharacters(data.Maintech.ToString())));
+            template = template.Replace("##summary##", EscapeSpecialCharacters(data.Summary.ToString()));
+            template = template.Replace("##takmisummary##", EscapeSpecialCharacters(data.Takumisummary.ToString()));
+            template = template.Replace("##essawasummary##", EscapeSpecialCharacters(data.Esshvasummary.ToString()));
+            template = template.Replace("##ewingsummary##", EscapeSpecialCharacters(data.Ewingssummary.ToString()));
 
             // Replace bullet points for each experience
             template = ReplaceBulletPoints(template, "##takumibulletpoints##", data.Takumibulletpoints);
@@ -38,7 +38,6 @@ namespace WebApplication1.Services
             // Replace technical skills and soft skills
             template = ReplaceSkills(template, "##hardskillset##", data.Hardskillset);
             template = ReplaceSoftSkills(template, "##softskillset##", data.Softskillset);
-
             // Write the updated template to a new file
             File.WriteAllText(outputFilePath, template);
             return Path.Combine(_hostingEnvironment.ContentRootPath, "output.tex");
