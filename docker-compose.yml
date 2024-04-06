@@ -1,8 +1,20 @@
-﻿version: '3.4'
+﻿---
+# docker-compose up -d
+# docker-compose up --build
+# docker-compose down
+# docker-compose down -v
+
+version: "3.8"
 
 services:
-  resumeCreator:
-    image: ${DOCKER_REGISTRY-}resumeCreator
+ 
+  resumecreatoz:
+    image:   resumecreatoz:local
+    container_name:   resumecreatoz
     build:
       context: .
-      dockerfile: Dockerfile
+    ports:
+      - 5000:8080
+
+volumes:
+  dbdata:

@@ -27,4 +27,8 @@
     <None Remove="C:\Users\devin\.nuget\packages\groupdocs.conversion\24.3.0\build\netstandard2.1\..\..\runtimes\win-x64\native\harfbuzz.dll" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="out\" />
+  </ItemGroup>
+
 </Project>

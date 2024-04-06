@@ -11,6 +11,7 @@ using GroupDocs.Conversion;
 using GroupDocs.Conversion.Options.Convert;
 using WebApplication1.Models;
 using WebApplication1.Services;
+using System.Security;
 
 
 [ApiController]
@@ -27,10 +28,19 @@ public class CVController : ControllerBase
     [HttpPost]
     public ActionResult GeneratePdf([FromBody] CVData data)
     {
- 
-        string templateUrl = _resumeService.ProcessJsonAndGenerateTemplate(data);
- 
-        return Ok(templateUrl);
+        try
+        {
+
+            string templateUrl = _resumeService.ProcessJsonAndGenerateTemplate(data);
+
+            return Ok(templateUrl);
+
+        }
+        catch (Exception ex)
+        {
+
+            return StatusCode(500, ex.Message);
+        }
         
     }
 }
