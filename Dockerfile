@@ -1,25 +1,22 @@
-﻿# Use the official .NET SDK image as a base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
+WORKDIR /app
+EXPOSE 8081
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["ResumeCreator/CVCreator.csproj", "ResumeCreator/"]
+RUN dotnet restore "./ResumeCreator/./CVCreator.csproj"
+COPY . .
+WORKDIR "/src/ResumeCreator"
+RUN dotnet build "./CVCreator.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Set the working directory in the container
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./CVCreator.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
 WORKDIR /app
-
-# Copy the project files to the container
-COPY . ./
-
-# Build the application
-RUN dotnet publish -c Release -o out
-
-# Create a runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the published output from the build stage to the runtime image
-COPY --from=build /app/out ./
-
-# Expose the port the app runs on
-EXPOSE 80
-
-ENTRYPOINT ["dotnet", "ResumeCreator.exe"]
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "CVCreator.dll"]
