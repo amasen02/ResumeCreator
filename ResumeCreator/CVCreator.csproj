@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="out\**" />
+    <Content Remove="out\**" />
+    <EmbeddedResource Remove="out\**" />
+    <None Remove="out\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aspose.TeX" Version="24.3.0" />
     <PackageReference Include="GroupDocs.Conversion" Version="24.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -25,10 +32,6 @@
 
   <ItemGroup>
     <None Remove="C:\Users\devin\.nuget\packages\groupdocs.conversion\24.3.0\build\netstandard2.1\..\..\runtimes\win-x64\native\harfbuzz.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="out\" />
   </ItemGroup>
 
 </Project>

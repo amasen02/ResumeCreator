@@ -32,8 +32,12 @@ public class CVController : ControllerBase
         {
 
             string templateUrl = _resumeService.ProcessJsonAndGenerateTemplate(data);
+            if (!System.IO.File.Exists(templateUrl))
+                return NotFound();
 
-            return Ok(templateUrl);
+            var fileStream = new FileStream(templateUrl, FileMode.Open, FileAccess.Read);
+            return File(fileStream, "text/plain", "output.tex");
+      
 
         }
         catch (Exception ex)
