@@ -1,9 +1,9 @@
-﻿version: '3.8'
+﻿version: '3.4'
 
 services:
-  my-dotnet-app:
+  resumeCreator:
+    image: ${DOCKER_REGISTRY-}resumeCreator
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8081:8080"
+    ports: "8081:8080"
