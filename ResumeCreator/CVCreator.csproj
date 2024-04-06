@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Aspose.TeX" Version="24.3.0" />
     <PackageReference Include="GroupDocs.Conversion" Version="24.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
