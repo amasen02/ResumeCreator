@@ -22,4 +22,4 @@ COPY --from=build /app/out ./
 # Expose the port the app runs on
 EXPOSE 80
 
-ENTRYPOINT ["dotnet", "ResumeCreator.dll"]
+ENTRYPOINT ["dotnet", "ResumeCreator.exe"]
