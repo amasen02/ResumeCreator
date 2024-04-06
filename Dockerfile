@@ -1,22 +1,22 @@
-﻿# Use the official .NET SDK image from Docker Hub
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-
-# Set the working directory in the container
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
+EXPOSE 8081
 
-# Copy the project file and restore dependencies
-COPY *.csproj ./
-RUN dotnet restore
-
-# Copy the remaining source code
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["ResumeCreator/CVCreator.csproj", "ResumeCreator/"]
+RUN dotnet restore "./ResumeCreator/./CVCreator.csproj"
 COPY . .
+WORKDIR "/src/ResumeCreator"
+RUN dotnet build "./CVCreator.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Build the application
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./CVCreator.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Build the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out .
-EXPOSE 8081  # Expose port 8081
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "CVCreator.dll"]
