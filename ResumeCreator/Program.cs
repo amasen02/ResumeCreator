@@ -11,14 +11,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy",
-        builder =>
-        {
-            builder
-            .SetIsOriginAllowed(origin => true) // allows any origin
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-        });
+builder =>
+{
+    builder
+    .WithOrigins("chrome-extension://hiafpcacojekfmibhngjapjhfdlhbekp") // allows specific origin
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials();
+});
 });
 
 var app = builder.Build();
