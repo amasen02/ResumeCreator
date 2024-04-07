@@ -8,17 +8,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<ResumeService>(); // Add TemplateProcessor as a transient service
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        policy =>
+    options.AddPolicy("MyPolicy",
+        builder =>
         {
-            policy.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            builder
+            .SetIsOriginAllowed(origin => true) // allows any origin
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
         });
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
