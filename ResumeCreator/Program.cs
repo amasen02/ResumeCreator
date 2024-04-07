@@ -1,6 +1,7 @@
 using WebApplication1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
 
@@ -10,15 +11,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("MyPolicy",
-builder =>
-{
-    builder
-    .WithOrigins("chrome-extension://hiafpcacojekfmibhngjapjhfdlhbekp") // allows specific origin
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowCredentials();
-});
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod();
+                      });
 });
 
 var app = builder.Build();
@@ -29,7 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("MyPolicy");
+app.UseCors(MyAllowSpecificOrigins);
 
 
 app.UseHttpsRedirection();
