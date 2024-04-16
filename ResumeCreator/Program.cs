@@ -3,6 +3,10 @@ using WebApplication1.Services;
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+
+
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -19,8 +23,11 @@ builder.Services.AddCors(options =>
                                   .AllowAnyMethod();
                       });
 });
+// Register services
+builder.Services.AddScoped<ResumeService>();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

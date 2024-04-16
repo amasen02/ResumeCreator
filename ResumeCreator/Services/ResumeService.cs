@@ -1,12 +1,12 @@
-﻿using Aspose.TeX;
+using Aspose.TeX;
 using GroupDocs.Conversion;
 using System.Text;
 using WebApplication1.Models;
 
 namespace WebApplication1.Services
 {
-    public class ResumeService
-    {
+ 
+    public class ResumeService { 
         private readonly IWebHostEnvironment _hostingEnvironment;
 
         public ResumeService(IWebHostEnvironment hostingEnvironment)
@@ -27,13 +27,13 @@ namespace WebApplication1.Services
             template = template.Replace("##maintech##", ConvertToLaTeX(EscapeSpecialCharacters(data.Maintech.ToString())));
             template = template.Replace("##summary##", EscapeSpecialCharacters(data.Summary.ToString()));
             template = template.Replace("##takmisummary##", EscapeSpecialCharacters(data.Takumisummary.ToString()));
-            template = template.Replace("##essawasummary##", EscapeSpecialCharacters(data.Esshvasummary.ToString()));
-            template = template.Replace("##ewingsummary##", EscapeSpecialCharacters(data.Ewingssummary.ToString()));
+            template = template.Replace("##essawasummary##", EscapeSpecialCharacters(data.Esshwasummary.ToString()));
+            template = template.Replace("##ewingsummary##", EscapeSpecialCharacters(data.Ewingsummary.ToString()));
 
             // Replace bullet points for each experience
             template = ReplaceBulletPoints(template, "##takumibulletpoints##", data.Takumibulletpoints);
-            template = ReplaceBulletPoints(template, "##esshvabulletpoints##", data.Esshvabulletpoints);
-            template = ReplaceBulletPoints(template, "##ewingbuletpoints##", data.Ewingsbulletpoints);
+            template = ReplaceBulletPoints(template, "##esshvabulletpoints##", data.Esshwabulletpoints);
+            template = ReplaceBulletPoints(template, "##ewingbuletpoints##", data.Ewingbulletpoints);
 
             // Replace technical skills and soft skills
             template = ReplaceSkills(template, "##hardskillset##", data.Hardskillset);
